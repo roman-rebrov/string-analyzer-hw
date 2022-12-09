@@ -10,14 +10,14 @@ class StringAnalyzerService {
     public void run() {
 
         final Repository repo = new Repository();
-        final Handler handler = new Handler(repo);
+        final Handler handler = new Handler();
         final Generator generator = new Generator(lines, stringLength, "abc");
 
         executor.submit(generator.generateStringsInRepository(repo));
 
-        executor.submit(handler.getAnalyzeA());
-        executor.submit(handler.getAnalyzeB());
-        executor.submit(handler.getAnalyzeC());
+        executor.submit(handler.getAnalyzeTask('a', lines, repo.getALetterStorage()));
+        executor.submit(handler.getAnalyzeTask('b', lines, repo.getBLetterStorage()));
+        executor.submit(handler.getAnalyzeTask('c', lines, repo.getCLetterStorage()));
 
         executor.shutdown();
 
